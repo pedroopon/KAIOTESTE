@@ -8,6 +8,7 @@ const url = "https://jsonplaceholder.typicode.com/posts"
 //pegar URL
 const urlParametros = new URLSearchParams(window.location.search)
 const IdPost = urlParametros.get("id")
+const comentariosContainers = document.querySelector("#comentarios-containers")
 
 /* botao.addEventListener("click", (e) => {
     buscarTodosOsPosts()
@@ -53,7 +54,10 @@ async function buscarTodosOsPosts() {
 
 async function BuscarPostEspecifico(id) {
     const repostaPost = await fetch (`${url}/${id}`) //(url + "/")
+    const respostacomentario = await fetch (`${url}/${id}/comments`)
+
     const dataPostagem = await repostaPost.json() 
+    const datacomentario = await respostacomentario.json()
 
     const title = document.createElement("h1")
     const body = document.createElement("p")
@@ -64,5 +68,22 @@ async function BuscarPostEspecifico(id) {
     postscontainer.appendChild(title)
     postscontainer.appendChild(body)
 
+    datacomentario.map((comentario) => {
+        criarComentarios(comentario)
+    })
 
+
+}
+
+function criarComentarios(comentario) {
+    const divComentario = document.createElement("div")
+    const email = document.createElement("h3")
+    const paragrafocomentario = document.createElement("p")
+
+    email.innerText = comentario.email
+    paragrafocomentario.innerText = comentario.body
+
+    divComentario.appendChild(email)
+    divComentario.appendChild(paragrafocomentario)
+    comentariosContainers.appendChild(divComentario)
 }
