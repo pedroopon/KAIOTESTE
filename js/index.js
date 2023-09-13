@@ -64,6 +64,7 @@ async function BuscarPostEspecifico(id) {
 
     title.innerText = dataPostagem.title
     body.innerText = dataPostagem.body
+    loadingElement.classList.add("hide")
 
     postscontainer.appendChild(title)
     postscontainer.appendChild(body)
